@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoShare - Generate Location Link</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #link {
+            margin-top: 20px;
+            word-break: break-word;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Generate Location Link</h2>
+    <button onclick="getLocation()">Generate Link</button>
+    <p id="link"></p>
+</div>
+
+<script>
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function getLocation() {
+    navigator.geolocation.getCurrentPosition(success, error);
+}
+
+function success(pos) {
+    const formData = new FormData();
+    formData.append('latitude', pos.coords.latitude);
+    formData.append('longitude', pos.coords.longitude);
+
+    fetch("/generate/", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": getCookie('csrftoken')
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("link").innerHTML = "Share this link: <a href='" + data.link + "' target='_blank'>" + window.location.origin + data.link + "</a>";
+    });
+}
+
+function error() {
+    alert("Unable to retrieve location.");
+}
+</script>
+
+</body>
+</html>
