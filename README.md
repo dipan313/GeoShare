@@ -9,7 +9,7 @@
 
 A **secure and intuitive Django web application** that enables real-time geolocation sharing through unique, shareable links. Built with privacy and user experience in mind, GeoShare allows users to instantly share their location with others while maintaining control over their data.
 
-> **Use Case**: Perfect for meetups, emergency situations, delivery services, event coordination, and any scenario where precise location sharing is essential.
+> **Use Case**: Perfect for meetups, emergency situations, delivery services, and any scenario where precise location sharing is essential.
 
 ## 🚀 Features
 
