@@ -251,7 +251,6 @@ function initializeMap(sharerLat, sharerLng, viewerLat, viewerLng) {
 - **Location Consent**: Explicit user permission for geolocation access
 - **Link Expiry**: Configurable expiration times for shared links
 - **No User Tracking**: Minimal data collection and storage
-- **Self-Hosted**: Complete control over data and infrastructure
 
 ### **Django Security Configuration**
 ```python
